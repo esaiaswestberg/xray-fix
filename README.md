@@ -1,3 +1,5 @@
+![X-rat Fix Banner](./assets/banner.png)
+
 # X-ray Fix
 
 X-ray Fix is a high-performance Minecraft server plugin designed to defeat both visual X-ray mods and seed-based X-ray exploits. It achieves this by decoupling ore generation from the world seed and employing advanced packet-level obfuscation to hide underground blocks from the client.
