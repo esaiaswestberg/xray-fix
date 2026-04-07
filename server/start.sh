@@ -1,11 +1,11 @@
 #!/bin/bash
 
-JAR="fabric-server-mc.1.21.11-loader.0.18.6-launcher.1.1.1.jar"
+JAR="folia-1.21.11-14.jar"
 
 # Download the server jar only if it's missing
 if [ ! -f "$JAR" ]; then
     echo "Server jar not found, downloading..."
-    curl -OJ https://meta.fabricmc.net/v2/versions/loader/1.21.11/0.18.6/1.1.1/server/jar
+    curl -OJ https://fill-data.papermc.io/v1/objects/f52c408490a0225611e67907a3ca19f7e6da2c6bc899e715d5f46844e7103c39/folia-1.21.11-14.jar
 fi
 
 # Prompt for EULA acceptance if not already accepted
