@@ -15,7 +15,7 @@ jobs:
 
       - name: Read target versions
         id: read-versions
-        run: echo "versions=$(cat assets/target-versions.json)" >> $GITHUB_OUTPUT
+        run: echo "versions=$(jq -c '.' assets/target-versions.json)" >> $GITHUB_OUTPUT
 
       - name: Extract plugin version from tag
         id: plugin-version
