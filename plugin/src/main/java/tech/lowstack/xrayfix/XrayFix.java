@@ -19,6 +19,14 @@ public class XrayFix extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new ChunkListener(oreReplacer), this);
 
+        if (getServer().getPluginManager().getPlugin("ProtocolLib") != null) {
+            ChunkObfuscator obfuscator = new ChunkObfuscator(this);
+            getServer().getPluginManager().registerEvents(obfuscator, this);
+            getLogger().info("ProtocolLib found — packet obfuscation active.");
+        } else {
+            getLogger().warning("ProtocolLib not found — packet obfuscation disabled.");
+        }
+
         getLogger().info("XrayFix enabled. Ore randomization active.");
         getLogger().info("Loaded " + oreReplacer.getOreGroupCount() + " ore group(s).");
     }

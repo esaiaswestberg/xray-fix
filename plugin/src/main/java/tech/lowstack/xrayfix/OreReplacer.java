@@ -104,12 +104,13 @@ public class OreReplacer {
 
     // Scans the full chunk column and replaces all managed ore blocks with their host rock.
     private void stripOres(Chunk chunk, int minY, int maxY, World.Environment env) {
+        org.bukkit.ChunkSnapshot snapshot = chunk.getChunkSnapshot(false, false, false);
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 for (int y = minY; y < maxY; y++) {
-                    Block block = chunk.getBlock(x, y, z);
-                    if (managedOreMaterials.contains(block.getType())) {
-                        block.setType(hostRockFor(block.getType(), env), false);
+                    Material type = snapshot.getBlockType(x, y, z);
+                    if (managedOreMaterials.contains(type)) {
+                        chunk.getBlock(x, y, z).setType(hostRockFor(type, env), false);
                     }
                 }
             }
