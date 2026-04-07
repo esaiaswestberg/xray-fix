@@ -5,4 +5,4 @@
 
 # Add exceptions
 !.gitignore
-!start.sh
+!start-*.sh
