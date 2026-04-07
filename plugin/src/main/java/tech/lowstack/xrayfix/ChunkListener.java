@@ -22,7 +22,7 @@ public class ChunkListener implements Listener {
     }
 
     // Secondary handler: catches chunks that loaded from disk without our PDC flag,
-    // e.g. worlds that existed before XrayFix was installed (if process_existing_chunks is true).
+    // e.g. worlds that existed before X-ray Fix was installed (if process_existing_chunks is true).
     @EventHandler(priority = EventPriority.LOWEST)
     public void onChunkLoad(ChunkLoadEvent event) {
         if (!oreReplacer.isProcessExistingChunks()) return;

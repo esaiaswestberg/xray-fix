@@ -1,4 +1,4 @@
-name: XrayFix
+name: X-ray Fix
 version: ${project.version}
 main: tech.lowstack.xrayfix.XrayFix
 api-version: '1.21'

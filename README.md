@@ -1,6 +1,6 @@
-# XrayFix
+# X-ray Fix
 
-XrayFix is a high-performance Minecraft server plugin designed to defeat both visual X-ray mods and seed-based X-ray exploits. It achieves this by decoupling ore generation from the world seed and employing advanced packet-level obfuscation to hide underground blocks from the client.
+X-ray Fix is a high-performance Minecraft server plugin designed to defeat both visual X-ray mods and seed-based X-ray exploits. It achieves this by decoupling ore generation from the world seed and employing advanced packet-level obfuscation to hide underground blocks from the client.
 
 ## Features
 
@@ -39,13 +39,13 @@ The resulting JAR will be located in `plugin/target/xrayfix-1.0.0.jar`.
 ## How It Works
 
 ### 1. Ore Stripping & Replacement (`OreReplacer`)
-When a chunk is generated (or loaded for the first time after installation), XrayFix scans the chunk and removes all naturally generated ores. It then calculates new ore positions using a PRNG seeded with a combination of the chunk coordinates and a server-side `secret`. This ensures that ore placement is consistent but unpredictable without the secret.
+When a chunk is generated (or loaded for the first time after installation), X-ray Fix scans the chunk and removes all naturally generated ores. It then calculates new ore positions using a PRNG seeded with a combination of the chunk coordinates and a server-side `secret`. This ensures that ore placement is consistent but unpredictable without the secret.
 
 ### 2. Packet Obfuscation (`ChunkObfuscator`)
-When a chunk is sent to a player, XrayFix identifies blocks that are "hidden" (not exposed to air or transparent blocks). These blocks are replaced in the client-bound data with random selections from a pool of `fake_materials`. 
+When a chunk is sent to a player, X-ray Fix identifies blocks that are "hidden" (not exposed to air or transparent blocks). These blocks are replaced in the client-bound data with random selections from a pool of `fake_materials`. 
 
 ### 3. Dynamic Revealing
-To prevent visual glitches while mining, XrayFix listens for block breaks, placements, and explosions. When a block is modified, it immediately sends high-priority multi-block change packets to the player for all 6 adjacent neighbors, ensuring that newly exposed blocks are revealed instantly.
+To prevent visual glitches while mining, X-ray Fix listens for block breaks, placements, and explosions. When a block is modified, it immediately sends high-priority multi-block change packets to the player for all 6 adjacent neighbors, ensuring that newly exposed blocks are revealed instantly.
 
 ## Contributing
 

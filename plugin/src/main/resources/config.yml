@@ -1,11 +1,11 @@
-# XrayFix Configuration
+# X-ray Fix Configuration
 #
 # secret: Server-specific secret used to seed ore placement. Auto-generated on first run.
 #   Changing this will cause all newly-loaded chunks to have different ore positions.
 #   Keep this value private — if it leaks, seed-based X-ray becomes possible again.
 secret: ""
 
-# process_existing_chunks: If true, chunks that were generated before XrayFix was installed
+# process_existing_chunks: If true, chunks that were generated before X-ray Fix was installed
 #   will also have their ores replaced when they are next loaded.
 #   WARNING: This will strip and re-place ores in ALL loaded chunks that haven't been
 #   processed yet. Use with caution on existing worlds.

@@ -23,13 +23,13 @@ public class XrayFix extends JavaPlugin {
         getServer().getPluginManager().registerEvents(obfuscator, this);
         getLogger().info("ProtocolLib packet obfuscation active.");
 
-        getLogger().info("XrayFix enabled. Ore randomization active.");
+        getLogger().info("X-ray Fix enabled. Ore randomization active.");
         getLogger().info("Loaded " + oreReplacer.getOreGroupCount() + " ore group(s).");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("XrayFix disabled.");
+        getLogger().info("X-ray Fix disabled.");
     }
 
     private void ensureSecret() {
