@@ -1,7 +1,12 @@
 package tech.lowstack.xrayfix;
 
-import io.papermc.paper.event.packet.PlayerChunkLoadEvent;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
 import org.bukkit.*;
+import java.lang.reflect.Method;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
@@ -33,6 +38,25 @@ public class ChunkObfuscator implements Listener {
         this.fakeMaterials = loadFakeMaterials("obfuscation.fake_materials", Material.STONE);
         this.fakeMaterialsNether = loadFakeMaterials("obfuscation.nether_fake_materials", Material.NETHERRACK);
         this.transparentBlocks = buildTransparentBlockSet();
+
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Server.MAP_CHUNK) {
+            @Override
+            public void onPacketSending(PacketEvent event) {
+                if (!enabled) return;
+                Player player = event.getPlayer();
+                int chunkX = event.getPacket().getIntegers().read(0);
+                int chunkZ = event.getPacket().getIntegers().read(1);
+                World world = player.getWorld();
+
+                if (world.getEnvironment() == World.Environment.THE_END) return;
+
+                SchedulerUtil.runChunkTask(plugin, world.getChunkAt(chunkX, chunkZ), () -> {
+                    if (player.isOnline()) {
+                        processChunkSend(player, world.getChunkAt(chunkX, chunkZ));
+                    }
+                });
+            }
+        });
     }
 
     private List<BlockData> loadFakeMaterials(String configPath, Material fallback) {
@@ -67,12 +91,7 @@ public class ChunkObfuscator implements Listener {
         return set;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onChunkSend(PlayerChunkLoadEvent event) {
-        if (!enabled) return;
-
-        Chunk chunk = event.getChunk();
-        Player player = event.getPlayer();
+    private void processChunkSend(Player player, Chunk chunk) {
         World world = chunk.getWorld();
 
         if (world.getEnvironment() == World.Environment.THE_END) return;
@@ -112,12 +131,12 @@ public class ChunkObfuscator implements Listener {
             for (Map.Entry<Location, BlockData> entry : fakeBlocks.entrySet()) {
                 batch.put(entry.getKey(), entry.getValue());
                 if (batch.size() >= 512) {
-                    player.sendMultiBlockChange(batch);
+                    sendFakeBlocks(player, batch);
                     batch.clear();
                 }
             }
             if (!batch.isEmpty()) {
-                player.sendMultiBlockChange(batch);
+                sendFakeBlocks(player, batch);
             }
         }
     }
@@ -241,8 +260,31 @@ public class ChunkObfuscator implements Listener {
 
         for (Player player : world.getPlayers()) {
             if (player.getLocation().distanceSquared(center) <= viewDistSquared) {
-                player.sendMultiBlockChange(updates);
+                sendFakeBlocks(player, updates);
             }
+        }
+    }
+
+    private static Method sendMultiBlockChangeMethod;
+
+    static {
+        try {
+            sendMultiBlockChangeMethod = Player.class.getMethod("sendMultiBlockChange", Map.class);
+        } catch (NoSuchMethodException e) {
+            sendMultiBlockChangeMethod = null;
+        }
+    }
+
+    private void sendFakeBlocks(Player player, Map<Location, BlockData> batch) {
+        if (sendMultiBlockChangeMethod != null) {
+            try {
+                sendMultiBlockChangeMethod.invoke(player, batch);
+                return;
+            } catch (Exception ignored) {
+            }
+        }
+        for (Map.Entry<Location, BlockData> entry : batch.entrySet()) {
+            player.sendBlockChange(entry.getKey(), entry.getValue());
         }
     }
 }
