@@ -216,7 +216,7 @@ fi
 # ── Build plugin ───────────────────────────────────────────────────────────────
 echo "Building plugin for MC $MC_VERSION..."
 MC_API_VERSION="${MC_MAJOR}.${MC_MINOR}"
-(cd "$PLUGIN_DIR" && mvn clean package -q -Dmc.version="$MC_VERSION" -Dmc.api-version="$MC_API_VERSION")
+(cd "$PLUGIN_DIR" && mvn clean package -q -Dmc.version="$MC_VERSION" -Dmc.api-version="$MC_API_VERSION" -Dmc.java-version="$REQUIRED_JAVA")
 echo "Plugin built."
 
 # ── Update plugins directory ───────────────────────────────────────────────────

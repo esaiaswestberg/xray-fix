@@ -20,10 +20,11 @@
     </developers>
 
     <properties>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>${mc.java-version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mc.version>1.21.1</mc.version>
         <mc.api-version>1.21</mc.api-version>
+        <mc.java-version>21</mc.java-version>
     </properties>
 
     <repositories>

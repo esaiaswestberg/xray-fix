@@ -46,7 +46,21 @@ IFS=',' read -ra VERSION_LIST <<< "$VERSIONS"
 for MC_VERSION in "${VERSION_LIST[@]}"; do
     echo "Building for Minecraft $MC_VERSION..."
     MC_API_VERSION=$(echo "$MC_VERSION" | cut -d. -f1-2)
-    if mvn clean package -Dmc.version="$MC_VERSION" -Dmc.api-version="$MC_API_VERSION" -q; then
+    MC_MAJOR=$(echo "$MC_VERSION" | cut -d. -f1)
+    MC_MINOR=$(echo "$MC_VERSION" | cut -d. -f2)
+    MC_PATCH=$(echo "$MC_VERSION" | cut -d. -f3); MC_PATCH=${MC_PATCH:-0}
+    if   [ "$MC_MAJOR" -ne 1 ] 2>/dev/null; then
+        MC_JAVA_VERSION=21
+    elif [ "$MC_MINOR" -ge 21 ] || { [ "$MC_MINOR" -eq 20 ] && [ "$MC_PATCH" -ge 5 ]; }; then
+        MC_JAVA_VERSION=21
+    elif [ "$MC_MINOR" -ge 18 ]; then
+        MC_JAVA_VERSION=17
+    elif [ "$MC_MINOR" -eq 17 ]; then
+        MC_JAVA_VERSION=16
+    else
+        MC_JAVA_VERSION=8
+    fi
+    if mvn clean package -Dmc.version="$MC_VERSION" -Dmc.api-version="$MC_API_VERSION" -Dmc.java-version="$MC_JAVA_VERSION" -q; then
         SRC="target/xrayfix-${PLUGIN_VERSION}.jar"
         DEST="${OUT_DIR}/xrayfix-v${PLUGIN_VERSION}-mc${MC_VERSION}.jar"
         cp "$SRC" "$DEST"
