@@ -46,7 +46,9 @@ jobs:
 
       - name: Build
         working-directory: plugin
-        run: mvn clean package -Dmc.version=${{ matrix.mc-version }} -q
+        run: |
+          MC_API_VERSION=$(echo "${{ matrix.mc-version }}" | cut -d. -f1-2)
+          mvn clean package -Dmc.version=${{ matrix.mc-version }} -Dmc.api-version=$MC_API_VERSION -q
 
       - name: Upload to release
         env:

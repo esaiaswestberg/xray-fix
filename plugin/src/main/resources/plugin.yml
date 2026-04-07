@@ -1,7 +1,7 @@
 name: XrayFix
 version: ${project.version}
 main: tech.lowstack.xrayfix.XrayFix
-api-version: '1.21'
+api-version: '${mc.api-version}'
 description: Decouples ore generation from the world seed to prevent seed-based X-ray exploits.
 authors:
   - Esaias Westberg
