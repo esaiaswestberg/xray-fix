@@ -54,5 +54,5 @@ jobs:
         run: |
           VERSION=${{ needs.prepare.outputs.plugin-version }}
           MC_VERSION=${{ matrix.mc-version }}
-          gh release upload ${{ github.ref_name }} \
-            "plugin/target/xrayfix-${VERSION}.jar#xrayfix-v${VERSION}-mc${MC_VERSION}.jar"
+          cp "plugin/target/xrayfix-${VERSION}.jar" "xrayfix-v${VERSION}-mc${MC_VERSION}.jar"
+          gh release upload ${{ github.ref_name }} "xrayfix-v${VERSION}-mc${MC_VERSION}.jar"
