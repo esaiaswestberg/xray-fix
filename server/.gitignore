@@ -6,3 +6,4 @@
 # Add exceptions
 !.gitignore
 !start-*.sh
+!setup.sh
