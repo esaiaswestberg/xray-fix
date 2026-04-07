@@ -2,7 +2,7 @@
 #
 # secret: Server-specific secret used to seed ore placement. Auto-generated on first run.
 #   Changing this will cause all newly-loaded chunks to have different ore positions.
-#   Keep this value private — if it leaks, seed-based X-ray becomes possible again.
+#   Keep this value private - if it leaks, seed-based X-ray becomes possible again.
 secret: ""
 
 # process_existing_chunks: If true, chunks that were generated before X-ray Fix was installed

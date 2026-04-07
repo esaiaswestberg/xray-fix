@@ -61,14 +61,14 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Compatibility
 
-This table tracks which combinations of Minecraft version and server software have been tested with X-ray Fix. Contributions and reports are welcome — if you've tested a combination not listed here, please open an issue or pull request.
+This table tracks which combinations of Minecraft version and server software have been tested with X-ray Fix. Contributions and reports are welcome - if you've tested a combination not listed here, please open an issue or pull request.
 
 | Symbol | Meaning |
 |--------|---------|
 | ❓     | Untested |
 | ✅     | Fully working |
 | ⚠️     | Some issues, but server starts |
-| ❌     | Not working — server crashes on start |
+| ❌     | Not working - server crashes on start |
 
 | Version | Spigot | Bukkit | Paper | Purpur | Pufferfish | Folia |
 |---------|--------|--------|-------|--------|------------|-------|

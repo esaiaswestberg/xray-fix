@@ -71,7 +71,7 @@ public class OreReplacer {
         World world = chunk.getWorld();
         World.Environment env = world.getEnvironment();
 
-        // The End has no managed ores — just mark and skip.
+        // The End has no managed ores - just mark and skip.
         if (env == World.Environment.THE_END) {
             markProcessed(chunk);
             return;
@@ -133,7 +133,7 @@ public class OreReplacer {
             if (isHostRock(block.getType(), env)) {
                 block.setType(selectVariant(group, y), false);
             }
-            // Random walk — clamped to stay within this chunk and the ore's Y range.
+            // Random walk - clamped to stay within this chunk and the ore's Y range.
             x = Math.max(0, Math.min(15, x + rng.nextInt(3) - 1));
             y = Math.max(minY, Math.min(maxY, y + rng.nextInt(3) - 1));
             z = Math.max(0, Math.min(15, z + rng.nextInt(3) - 1));
@@ -184,7 +184,7 @@ public class OreReplacer {
         Logger log = plugin.getLogger();
         ConfigurationSection oresSection = plugin.getConfig().getConfigurationSection("ores");
         if (oresSection == null) {
-            log.warning("No 'ores' section found in config.yml — no ores will be managed.");
+            log.warning("No 'ores' section found in config.yml - no ores will be managed.");
             return Collections.emptyList();
         }
 
