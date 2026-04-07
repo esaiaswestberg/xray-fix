@@ -56,3 +56,19 @@ jobs:
           MC_VERSION=${{ matrix.mc-version }}
           cp "plugin/target/xrayfix-${VERSION}.jar" "xrayfix-v${VERSION}-mc${MC_VERSION}.jar"
           gh release upload ${{ github.ref_name }} "xrayfix-v${VERSION}-mc${MC_VERSION}.jar"
+
+      - uses: cloudnode-pro/modrinth-publish@v2
+        with:
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: ${{ vars.MODRINTH_ID }}
+          version: ${{ needs.prepare.outputs.plugin-version }}+mc${{ matrix.mc-version }}
+          name: ${{ github.event.release.name }}
+          changelog: ${{ github.event.release.body }}
+          loaders: |-
+            paper
+            spigot
+            bukkit
+            purpur
+            folia
+          game-versions: ${{ matrix.mc-version }}
+          files: xrayfix-v${{ needs.prepare.outputs.plugin-version }}-mc${{ matrix.mc-version }}.jar
