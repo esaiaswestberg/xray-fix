@@ -216,7 +216,23 @@ fi
 # ── Build plugin ───────────────────────────────────────────────────────────────
 echo "Building plugin for MC $MC_VERSION..."
 MC_API_VERSION="${MC_MAJOR}.${MC_MINOR}"
-(cd "$PLUGIN_DIR" && mvn clean package -q -Dmc.version="$MC_VERSION" -Dmc.api-version="$MC_API_VERSION" -Dmc.java-version="$REQUIRED_JAVA")
+
+# Detect the actual NMS artifact version installed by BuildTools in the local Maven repo.
+# BuildTools may install e.g. 1.21.11-R0.2-SNAPSHOT even when asked for 1.21.1.
+NMS_VERSION=$(ls -d ~/.m2/repository/org/spigotmc/spigot/"${MC_VERSION}"-R*-SNAPSHOT/ 2>/dev/null \
+    | xargs -I{} basename {} 2>/dev/null | sort -V | tail -n1)
+if [ -z "$NMS_VERSION" ]; then
+    NMS_VERSION="${MC_VERSION}-R0.1-SNAPSHOT"
+    echo "  (no locally installed NMS artifact found for ${MC_VERSION}; assuming ${NMS_VERSION})"
+else
+    echo "  Using NMS artifact: ${NMS_VERSION}"
+fi
+
+(cd "$PLUGIN_DIR" && mvn clean package -q \
+    -Dmc.version="$MC_VERSION" \
+    -Dmc.api-version="$MC_API_VERSION" \
+    -Dmc.java-version="$REQUIRED_JAVA" \
+    -Dmc.nms-version="$NMS_VERSION")
 echo "Plugin built."
 
 # ── Update plugins directory ───────────────────────────────────────────────────

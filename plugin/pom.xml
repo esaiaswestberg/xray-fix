@@ -25,6 +25,9 @@
         <mc.version>1.21.1</mc.version>
         <mc.api-version>1.21</mc.api-version>
         <mc.java-version>21</mc.java-version>
+        <!-- Full NMS artifact version; override with -Dmc.nms-version when the
+             BuildTools-installed jar uses a different R-revision (e.g. R0.2). -->
+        <mc.nms-version>${mc.version}-R0.1-SNAPSHOT</mc.nms-version>
     </properties>
 
     <repositories>
@@ -42,7 +45,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>${mc.version}-R0.1-SNAPSHOT</version>
+            <version>${mc.nms-version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

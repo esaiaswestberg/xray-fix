@@ -38,122 +38,45 @@ obfuscation:
     - NETHER_GOLD_ORE
     - ANCIENT_DEBRIS
 
-# Ore group configuration.
-# Each entry defines one ore type's placement parameters.
-# Multiple entries can share the same ore material (e.g. two iron entries for different Y ranges).
+# World generation configuration.
+# Ores are stripped from chunks and re-placed using a secret-seeded RNG so that
+# ore positions are not derivable from the world seed.
 #
-# Fields:
-#   enabled:          Whether to process this ore group.
-#   stone_ore:        Bukkit Material name for the stone/surface variant.
-#   deepslate_ore:    Bukkit Material name for the deepslate variant (Y < 0). Leave empty for nether ores.
-#   veins_per_chunk:  Number of vein placement attempts per chunk.
-#   vein_size:        Maximum blocks per vein (actual count may be lower due to non-host blocks).
-#   min_y / max_y:    Y range (inclusive) in which veins can start.
-ores:
-  coal:
-    enabled: true
-    stone_ore: COAL_ORE
-    deepslate_ore: DEEPSLATE_COAL_ORE
-    veins_per_chunk: 20
-    vein_size: 14
-    min_y: 0
-    max_y: 192
+# Sections: overworld, the_nether, the_end
+#
+# Per-section fields:
+#   vanilla_generation: If true, uses Minecraft's internal ore placement algorithm seeded from
+#     the server secret instead of the world seed. Vein sizes and counts match vanilla values.
+#     If false (or omitted), ores are stripped but not re-placed (obfuscation-only mode).
+#
+#   ores: List of ore types to manage. Each entry must have:
+#     stone_ore:    Bukkit Material name for the stone/surface variant.
+#     deepslate_ore: Bukkit Material name for the deepslate variant (Y < 0). Omit for nether ores.
+world_generation:
+  overworld:
+    vanilla_generation: true
+    ores:
+      - stone_ore: COAL_ORE
+        deepslate_ore: DEEPSLATE_COAL_ORE
+      - stone_ore: IRON_ORE
+        deepslate_ore: DEEPSLATE_IRON_ORE
+      - stone_ore: GOLD_ORE
+        deepslate_ore: DEEPSLATE_GOLD_ORE
+      - stone_ore: COPPER_ORE
+        deepslate_ore: DEEPSLATE_COPPER_ORE
+      - stone_ore: LAPIS_ORE
+        deepslate_ore: DEEPSLATE_LAPIS_ORE
+      - stone_ore: REDSTONE_ORE
+        deepslate_ore: DEEPSLATE_REDSTONE_ORE
+      - stone_ore: DIAMOND_ORE
+        deepslate_ore: DEEPSLATE_DIAMOND_ORE
 
-  iron_lower:
-    enabled: true
-    stone_ore: IRON_ORE
-    deepslate_ore: DEEPSLATE_IRON_ORE
-    veins_per_chunk: 15
-    vein_size: 9
-    min_y: -24
-    max_y: 56
+  the_nether:
+    vanilla_generation: true
+    ores:
+      - stone_ore: NETHER_QUARTZ_ORE
+      - stone_ore: NETHER_GOLD_ORE
+      - stone_ore: ANCIENT_DEBRIS
 
-  iron_upper:
-    enabled: true
-    stone_ore: IRON_ORE
-    deepslate_ore: DEEPSLATE_IRON_ORE
-    veins_per_chunk: 10
-    vein_size: 9
-    min_y: 80
-    max_y: 256
-
-  gold:
-    enabled: true
-    stone_ore: GOLD_ORE
-    deepslate_ore: DEEPSLATE_GOLD_ORE
-    veins_per_chunk: 4
-    vein_size: 8
-    min_y: -64
-    max_y: 32
-
-  copper:
-    enabled: true
-    stone_ore: COPPER_ORE
-    deepslate_ore: DEEPSLATE_COPPER_ORE
-    veins_per_chunk: 6
-    vein_size: 10
-    min_y: -16
-    max_y: 96
-
-  lapis:
-    enabled: true
-    stone_ore: LAPIS_ORE
-    deepslate_ore: DEEPSLATE_LAPIS_ORE
-    veins_per_chunk: 3
-    vein_size: 6
-    min_y: -64
-    max_y: 64
-
-  redstone:
-    enabled: true
-    stone_ore: REDSTONE_ORE
-    deepslate_ore: DEEPSLATE_REDSTONE_ORE
-    veins_per_chunk: 8
-    vein_size: 8
-    min_y: -64
-    max_y: 16
-
-  diamond:
-    enabled: true
-    stone_ore: DIAMOND_ORE
-    deepslate_ore: DEEPSLATE_DIAMOND_ORE
-    veins_per_chunk: 1
-    vein_size: 7
-    min_y: -64
-    max_y: -16
-
-  emerald:
-    enabled: false
-    stone_ore: EMERALD_ORE
-    deepslate_ore: DEEPSLATE_EMERALD_ORE
-    veins_per_chunk: 2
-    vein_size: 3
-    min_y: -16
-    max_y: 256
-
-  nether_quartz:
-    enabled: true
-    stone_ore: NETHER_QUARTZ_ORE
-    deepslate_ore: ""
-    veins_per_chunk: 16
-    vein_size: 12
-    min_y: 10
-    max_y: 117
-
-  nether_gold:
-    enabled: true
-    stone_ore: NETHER_GOLD_ORE
-    deepslate_ore: ""
-    veins_per_chunk: 10
-    vein_size: 9
-    min_y: 10
-    max_y: 117
-
-  ancient_debris:
-    enabled: true
-    stone_ore: ANCIENT_DEBRIS
-    deepslate_ore: ""
-    veins_per_chunk: 1
-    vein_size: 2
-    min_y: 8
-    max_y: 22
+  the_end:
+    ores: []
