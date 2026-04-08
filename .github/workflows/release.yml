@@ -49,9 +49,10 @@ jobs:
         run: |
           MC_VERSION="${{ matrix.mc-version }}"
           MC_API_VERSION=$(echo "$MC_VERSION" | cut -d. -f1-2)
+          MC_MAJOR=$(echo "$MC_VERSION" | cut -d. -f1)
           MC_MINOR=$(echo "$MC_VERSION" | cut -d. -f2)
           MC_PATCH=$(echo "$MC_VERSION" | cut -d. -f3); MC_PATCH=${MC_PATCH:-0}
-          if [[ "$MC_VERSION" =~ ^[^1]\. ]] || [[ ! "$MC_VERSION" =~ \. ]]; then
+          if [ "$MC_MAJOR" -ne 1 ] 2>/dev/null || [[ ! "$MC_VERSION" =~ \. ]]; then
             MC_JAVA_VERSION=21
           elif [ "$MC_MINOR" -ge 21 ] || { [ "$MC_MINOR" -eq 20 ] && [ "$MC_PATCH" -ge 5 ]; }; then
             MC_JAVA_VERSION=21
